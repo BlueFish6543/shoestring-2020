@@ -2,7 +2,6 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-filename = "state.pkl"
 # Map of current intent to next allowable intents
 # Basically the flowchart logic
 intent_map = {
@@ -16,6 +15,7 @@ class State:
     # Stores the state of the program
     def __init__(self):
         self.current_intent = None  # TODO possibly
+
 
 state = State()
 
@@ -31,7 +31,7 @@ def predict_intent(input_text, current_intent):
 
     # TODO: Predict scores from model, e.g.
     # scores = model.predict(input_text)
-    scores = []  # uncomment this line once we have the model working
+    scores = []  # remove this line once we have the model working
     # Discard predictions below threshold and if intent is not
     # in the list of next allowable intents
     results = [(index, score) for index, score in enumerate(scores)
