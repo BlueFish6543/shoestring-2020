@@ -100,6 +100,7 @@ def get_output():
         output = problem_solved()
         # Reset state intent
         state.intent = None
+        state.index = 0
 
     elif is_no(input_text):
         if state.index == len(state.intent_responses):
@@ -107,6 +108,7 @@ def get_output():
             output = could_not_solve()
             # Reset state intent
             state.intent = None
+            state.index = 0
         else:
             # Go to next question
             output = get_intent_response()
