@@ -1,28 +1,41 @@
-class State:
-    # Stores the state of the program
-    def __init__(self):
-        self.startup = True
-        self.current_intent = None
+import pickle
 
-
-state = State()
+filename = "state.pkl"
 # Map of current intent to next allowable intents
 # Basically the flowchart logic
 intent_map = {
-
+    # TODO
 }
 error_threshold = 0.5
 
 
+class State:
+    # Stores the state of the program
+    def __init__(self):
+        self.current_intent = None  # TODO possibly
+
+
+def save_state(state):
+    with open(filename, 'wb') as f:
+        pickle.dump(state, f)
+
+
+def restore_state():
+    with open(filename, 'rb') as f:
+        state = pickle.load(f)
+    return state
+
+
 def unknown_intent():
     # Couldn't figure out the intent
+    # TODO possibly
     return "<Could not figure out intent>"
 
 
 def predict_intent(input_text, current_intent):
     next_intents = intent_map[current_intent]
 
-    # Predict scores from model, e.g.
+    # TODO: Predict scores from model, e.g.
     # scores = model.predict(input_text)
     scores = []  # uncomment this line once we have the model working
     # Discard predictions below threshold and if intent is not
@@ -38,17 +51,26 @@ def predict_intent(input_text, current_intent):
     return results[0][0]  # top intent
 
 
-def get_output(input_text=None):
+def get_intent_response(intent):
+    # Get intent response
+    # TODO
+    return "<Lorem ipsum>"
+
+
+def get_output(input_text=None, startup=False):
     # This function to be called from somewhere else e.g. JavaScript?
-    if state.startup:
+    if startup:
         output = "<Greeting on startup>"
-        state.startup = False
+        state = State()
+        save_state(state)
     else:
+        state = restore_state()
         intent = predict_intent(input_text, state.current_intent)
-        # Obtain output from intent
-        # output = obtain_output_from_intent(intent)  # function to be implemented
-        output = "<Lorem ipsum>"  # uncomment this line once we have stuff working
+        output = get_intent_response(intent)
+
+        # Update state
         state.current_intent = intent
+        save_state(state)
 
     print(output)
     return output
