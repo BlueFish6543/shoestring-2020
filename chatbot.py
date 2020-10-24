@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -10,9 +12,33 @@ class State:
         self.intent = None
         self.intent_responses = []
         self.index = 0
+        self.intents = {}
+        self.responses_count = {}
+
+    def reset(self):
+        self.intent = None
+        self.intent_responses = []
+        self.index = 0
+
+    def sort_responses(self):
+        # Sort responses in descending order of occurrences
+        count = self.responses_count[self.intent]
+        sequence = sorted(range(len(count)),
+                          key=lambda i: count[i],
+                          reverse=True)
+        responses = self.intents[self.intent]["responses"]
+        self.intents[self.intent]["responses"] = [responses[i] for i in sequence]
+        self.responses_count[self.intent] = [count[i] for i in sequence]
 
 
 state = State()
+
+with open('intents.json') as f:
+    state.intents = json.load(f)['intents']
+
+# Collate counts of which responses solved the problem
+for i in range(len(state.intents)):
+    state.responses_count[i] = [0] * len(state.intents[i]["responses"])
 
 
 def is_yes(text):
@@ -27,12 +53,17 @@ def is_no(text):
 
 def problem_solved():
     # Problem solved
+    # Add to response tally
+    state.responses_count[state.intent][state.index - 1] += 1
+    state.sort_responses()
+    state.reset()
     # TODO possibly
     return "<Great!>"
 
 
 def could_not_solve():
     # Could not solve problem
+    state.reset()
     # TODO possibly
     return "<Sorry!>"
 
@@ -92,23 +123,20 @@ def get_output():
         intent = predict_intent(input_text, state.intent)
         # Update state intent and responses
         state.intent = intent
-        # TODO: update state.intent_responses. What if intent == "UNKNOWN"?
+        if intent == "UNKNOWN":
+            state.intent_responses = []
+        else:
+            state.intent_responses = state.intents[intent]["responses"]
         output = get_intent_response()
 
     elif is_yes(input_text):
         # Terminate
         output = problem_solved()
-        # Reset state intent
-        state.intent = None
-        state.index = 0
 
     elif is_no(input_text):
         if state.index == len(state.intent_responses):
             # Reached the end, could not solve problem
             output = could_not_solve()
-            # Reset state intent
-            state.intent = None
-            state.index = 0
         else:
             # Go to next question
             output = get_intent_response()

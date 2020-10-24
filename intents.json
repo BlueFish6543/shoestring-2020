@@ -24,7 +24,15 @@
         "No layer adhesion on Ender 3 Pro",
         "I'm having a terrible time getting things to stay stuck to the glass"
       ],
-      "responses": [""]
+      "responses": [
+        "Check your bed level. Does that fix the problem?",
+        "Check if you are using the appropriate bed temperature. Does that fix the problem?",
+        "Try to lower the print speed. Does that fix the problem?",
+        "Set a lower fan speed for the first few layers. Does that fix the problem?",
+        "Try lowering the nozzle height. Does that fix the problem?",
+        "Use an external adhesive agent. Does that fix the problem?",
+        "Use bed adhesion tools like brim or raft. Does that fix the problem?"
+      ]
     },
     {
       "tag": "nozzle_not_extruding",
@@ -49,7 +57,13 @@
         "What to do when your 3D Printer nozzle keeps clogging",
         "Ended up clogging up the nozzle"
       ],
-      "responses": [""]
+      "responses": [
+        "Check that the nozzle is not clogged. Does that fix the problem?",
+        "Ensure that the nozzle is primed with filament. Does that fix the problem?",
+        "Check that the E-motor is working. If it is not working, reconnect the cables of the E-motor. Does that fix the problem?",
+        "Ensure that nozzle is not too close to print bed. Does that fix the problem?",
+        "Is the filament damaged? You may need to replace the filament. Does that fix the problem?"
+      ]
     },
     {
       "tag": "weak_infill",
@@ -76,7 +90,11 @@
         "What the splodge of plastic is doing in the midst of the infill",
         "Infill failure when printing larger prints. However, now that I'm trying some bigger prints and I'm running into infill material excess."
       ],
-      "responses": [""]
+      "responses": [
+        "Increase the print speed of the infill. Does that fix the problem?",
+        "Check the extrusion width, increasing it will increase strength. Does that fix the problem?",
+        "Use an appropriate infill pattern. Does that fix the problem?"
+      ]
     },
     {
       "tag": "stringing_or_oozing",
@@ -102,7 +120,13 @@
         "I get stringing at the same settings",
         "But suddenly started getting stringing with that and then really messy stringing"
       ],
-      "responses": [""]
+      "responses": [
+        "Check the retraction speed, increasing it can decrease oozing. Does that fix the problem?",
+        "Set an ideal retraction distance. Does that fix the problem?",
+        "Adjust the heater temperature - lower temperatures reduce oozing. Does that fix the problem?",
+        "Avoid long free travels - use settings to find shortest route to the next deposition point. Does that fix the problem?",
+        "Adjust travel speed - try a higher travel speed. Does that fix the problem?"
+      ]
     },
     {
       "tag": "warping",
@@ -129,7 +153,12 @@
         "I have a warping problem",
         "Why are my layers messy and curling off the print bed?"
       ],
-      "responses": [""]
+      "responses": [
+        "Increase the bed temperature. Does that fix the problem?",
+        "Adjust the fan speed - switch off the fan or keep to minimum for first few layers. Does that fix the problem?",
+        "Set an optimum ambient temperature if possible. Does that help?",
+        "Use bed adhesion tools like Brim and Raft. Does that fix the problem?"
+      ]
     },
     {
       "tag": "cannot_print_from_storage_device",
@@ -156,7 +185,10 @@
         "My files don't show up when I insert the SD card",
         "How can I print directly from cura to my 3D printer using USB?"
       ],
-      "responses": [""]
+      "responses": [
+        "Try erasing, reformatting or replacing your SD card. Does that fix the problem?",
+        "Do other files on your storage device work? If they do, try moving the model and restarting the slicing, or restoring the model. If not, you might have to contact the supplier. Does that fix the problem?"
+      ]
     },
     {
       "tag": "print_nozzle_does_not_home",
@@ -186,7 +218,10 @@
         "Printer randomly moves to home during printing, then resumes as normal",
         "Not taking the Home Offset into account when printing a test pattern"
       ],
-      "responses": [""]
+      "responses": [
+        "Does it move? If it doesn't, try reconnecting the cables of the XYZ motor. Does that fix the problem?",
+        "Try reconnecting the cables of the limit switch. Does that fix the problem?"
+      ]
     },
     {
       "tag": "heat_bed_problems",
@@ -211,7 +246,10 @@
           "Heatbed temperature not constant",
           "My heated bed has stopped working"
       ],
-      "responses": [""]
+      "responses": [
+        "Please check if the bed is heated. If not, please reconnect the cables of the heat bed. Does it work now?",
+        "Please check if the temperature is at the target temperature. If not, please reconnect the cables of the thermistor. Does it work now?"
+      ]
     },
     {
       "tag": "nozzle_heat_problems",
@@ -237,7 +275,10 @@
         "3D Printer hotend won't heat up",
         "My hotend is not warming up"
       ],
-      "responses": [""]
+      "responses": [
+        "Please check if the nozzle is heated. If not, please reconnect the cables of the extruder. Does it work now?",
+        "Please check if the temperature is at the target temperature. If not, please reconnect the cables of the thermistor. Does it work now?"
+      ]
     },
     {
       "tag": "print_is_misaligned",
@@ -261,7 +302,10 @@
         "What could be causing my y axis to slip? Occasionally, while printing, my y axis will slip and the layer will, from that point forward, be shifted, ruining the print",
         "Perplexing Y-axis shifting problem - only in positive y direction, and only on moves of a very specific radius"
       ],
-      "responses": [""]
+      "responses": [
+        "Try to restart the slicing. Does it work?",
+        "Adjust the tension of the synchronous belt. Does it work?"
+      ]
     },
     {
       "tag": "others",
