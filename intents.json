@@ -132,6 +132,33 @@
       "responses": [""]
     },
     {
+      "tag": "cannot_print_from_storage_device",
+      "patterns": [
+        "I tried slicing the model multiple times, different hotness nozzle, 200 micron, 100 micron etc. etc. all the same result.",
+        "It looks like there's something wrong with the export or the reading of the file from USB.",
+        "Then the printer will just pause like it is getting no comms for a bit",
+        "Stops for a while again",
+        "It will continue to go until the \"buffer\" apparently is empty, even removing the USB causes it to continue for a while",
+        "USB/print failure",
+        "Why I can't print anything",
+        "I cannot find the file from the SD card",
+        "I cannot find the file from the USB drive",
+        "I cannot print from the file in the SD card",
+        "I cannot print from the file in the USB drive",
+        "Issues with calibration and printer hardware/software issues",
+        "I wanted S3D to Print the item (I have not waited to see if it will actually print - don't want to print from computer) and the file never uploads to the SD card",
+        "Why is my printer not reading my SD card?",
+        "How to use a 3D printer",
+        "Possible SD card issue",
+        "Ender 3 SD card slot not working",
+        "Why is my SD card not being recognized?",
+        "The machine only seems to have an ability to print from an SD card. Even though a USB cable was provided and has a port on the control box.",
+        "My files don't show up when I insert the SD card",
+        "How can I print directly from cura to my 3D printer using USB?"
+      ],
+      "responses": [""]
+    },
+    {
       "tag": "print_nozzle_does_not_home",
       "patterns": [
         "The nozzle does not go back to origin",
@@ -213,7 +240,7 @@
       "responses": [""]
     },
     {
-      "tag": "Print is misaligned",
+      "tag": "print_is_misaligned",
       "patterns": [
         "My prints are perfect at the start, but after a few layers they start going messy.",
         "When I first started printing it seemed a bit weird",
