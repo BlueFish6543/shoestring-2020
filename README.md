@@ -2,7 +2,7 @@
 
 ## Setup
 
-`flask` and `pickle` should come with Python already by default. If not,
+`flask` should come with Python already by default. If not,
 use `pip3` or something to install them.
 
 JavaScript:

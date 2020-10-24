@@ -1,5 +1,4 @@
 from flask import Flask, request
-import pickle
 
 app = Flask(__name__)
 
@@ -18,16 +17,7 @@ class State:
     def __init__(self):
         self.current_intent = None  # TODO possibly
 
-
-def save_state(state):
-    with open(filename, 'wb') as f:
-        pickle.dump(state, f)
-
-
-def restore_state():
-    with open(filename, 'rb') as f:
-        state = pickle.load(f)
-    return state
+state = State()
 
 
 def unknown_intent():
@@ -70,16 +60,12 @@ def get_output():
 
     if startup:
         output = "<Greeting on startup>"
-        state = State()
-        save_state(state)
     else:
-        state = restore_state()
         intent = predict_intent(input_text, state.current_intent)
         output = get_intent_response(intent)
 
         # Update state
         state.current_intent = intent
-        save_state(state)
 
     print(output)
     return output
