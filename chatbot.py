@@ -1,10 +1,14 @@
+from flask import Flask, request
 import pickle
+
+app = Flask(__name__)
 
 filename = "state.pkl"
 # Map of current intent to next allowable intents
 # Basically the flowchart logic
 intent_map = {
     # TODO
+    None: "None"
 }
 error_threshold = 0.5
 
@@ -45,7 +49,7 @@ def predict_intent(input_text, current_intent):
 
     if not results:
         # Didn't match any intents
-        return unknown_intent()
+        return None  # TODO
 
     results.sort(key=lambda x: x[1], reverse=True)
     return results[0][0]  # top intent
@@ -57,8 +61,13 @@ def get_intent_response(intent):
     return "<Lorem ipsum>"
 
 
-def get_output(input_text=None, startup=False):
+@app.route('/get_output', methods=['POST'])
+def get_output():
     # This function to be called from somewhere else e.g. JavaScript?
+    data = request.json
+    input_text = data["input_text"]
+    startup = data["startup"]
+
     if startup:
         output = "<Greeting on startup>"
         state = State()
@@ -74,3 +83,7 @@ def get_output(input_text=None, startup=False):
 
     print(output)
     return output
+
+
+if __name__ == '__main__':
+    app.run()
