@@ -23,6 +23,12 @@ function App() {
       return;
     }
 
+    let updatedMessages = messages.concat({
+      text: userMessage,
+      sender: "user"
+    });
+    setMessages(updatedMessages);
+
     $.ajax({
       type: "POST",
       url: "/get_output",
@@ -31,10 +37,6 @@ function App() {
           input_text: userMessage
       })
     }).done(response => {
-      let updatedMessages = messages.concat({
-        text: userMessage,
-        sender: "user"
-      });
       updatedMessages = updatedMessages.concat({
         text: response,
         sender: "bot"

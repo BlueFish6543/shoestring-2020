@@ -1,9 +1,20 @@
 import json
+import os.path
+import pickle
 
 from flask import Flask, request
+from keras.preprocessing.sequence import pad_sequences
+import tensorflow as tf
 
 app = Flask(__name__)
 error_threshold = 0.5
+
+best_model_path = os.path.join(os.path.dirname(__file__), '{}-best_val_loss.h5'.format("nlp_test4newmodelaugrand"))
+tokenizer_path = os.path.join(os.path.dirname(__file__), "tokenizer.pickle")
+
+with open(tokenizer_path, 'rb') as handle:
+    tokenizer = pickle.load(handle)
+model = tf.keras.models.load_model(best_model_path)
 
 
 class State:
@@ -33,7 +44,7 @@ class State:
 
 state = State()
 
-with open('intents.json') as f:
+with open('intents_reduced.json') as f:
     state.intents = json.load(f)['intents']
 
 # Collate counts of which responses solved the problem
@@ -43,7 +54,7 @@ for i in range(len(state.intents)):
 
 def is_yes(text):
     return text.strip().lower() in \
-           ["y", "ye", "yep", "yes", "yea", "yeah"]
+           ["y", "ye", "yep", "yes", "yea", "yeah", "ok", "okay"]
 
 
 def is_no(text):
@@ -80,11 +91,13 @@ def greeting():
     return "<Greeting>"
 
 
-def predict_intent(input_text, current_intent):
+def predict_intent(input_text):
     # TODO: Predict scores from model, e.g.
-    # scores = model.predict(input_text)
-    scores = []  # remove this line once we have the model working
+    sequence = tokenizer.texts_to_sequences([input_text])
+    data = pad_sequences(sequence, maxlen=100, padding="post")
+    scores = model.predict(data)[0]
     # Discard predictions below threshold
+    print(scores)
     results = [(index, score) for index, score in enumerate(scores)
                if score > error_threshold]
 
@@ -98,14 +111,14 @@ def predict_intent(input_text, current_intent):
 
 def get_intent_response():
     if state.intent == "UNKNOWN":
+        state.reset()
         return unknown_intent()
 
     # Get intent response
     response = state.intent_responses[state.index]
     # Increment the index
     state.index += 1
-    # return response
-    return "<Lorem ipsum>"
+    return response
 
 
 @app.route('/get_output', methods=['POST'])
@@ -116,7 +129,7 @@ def get_output():
 
     if state.intent is None:
         # Figure out the intent
-        intent = predict_intent(input_text, state.intent)
+        intent = predict_intent(input_text)
         # Update state intent and responses
         state.intent = intent
         if intent == "UNKNOWN":
