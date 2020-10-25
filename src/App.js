@@ -5,7 +5,12 @@ import $ from 'jquery';
 function App() {
 
   const greeting = "Greeting";
-  const [messages, setMessages] = React.useState([greeting]);
+  const [messages, setMessages] = React.useState([
+    {
+      text: greeting,
+      sender: "bot"
+    }
+  ]);
   const [userMessage, setUserMessage] = React.useState();
 
   const handleInputChange = event => {
@@ -13,6 +18,11 @@ function App() {
   }
 
   const handleSubmit = event => {
+    if (!userMessage) {
+      event.preventDefault();
+      return;
+    }
+
     $.ajax({
       type: "POST",
       url: "/get_output",
@@ -21,13 +31,22 @@ function App() {
           input_text: userMessage
       })
     }).done(response => {
-      let updatedMessages = messages.concat(userMessage);
-      updatedMessages = updatedMessages.concat(response);
+      let updatedMessages = messages.concat({
+        text: userMessage,
+        sender: "user"
+      });
+      updatedMessages = updatedMessages.concat({
+        text: response,
+        sender: "bot"
+      });
       setMessages(updatedMessages);
     });
 
     event.preventDefault();
     setUserMessage("");
+
+    const element = document.getElementById("messages");
+    element.scrollTop = element.scrollHeight;
   };
 
   return (
@@ -37,8 +56,8 @@ function App() {
           Chatbot
         </div>
       </header>
-      <div className="flex flex-row flex-column-expand content">
-        <main className="flex flex-column messages">
+      <div className="flex flex-column-expand container content">
+        <main id="messages" className="flex messages">
           <List list={messages} />
         </main>
         <form
@@ -61,21 +80,23 @@ function App() {
 const List = ({ list }) => {
   if (list !== undefined && list.length > 0) {
     return (
-      <div>
+      <>
         {list.map((item, index) =>
           <Item key={index} item={item} />
         )}
-      </div>
+      </>
     );
   } else {
     return (<></>);
   }
 };
 
-const Item = ({ item }) => (
-  <div className="message">
-    <p className="text">{item}</p>
-  </div>
-);
+const Item = ({ item }) => {
+  return (
+    <div className="message">
+      <span className={`text ${item.sender}`}>{item.text}</span>
+    </div>
+  );
+};
 
 export default App;

@@ -1,38 +1,116 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html, body, button, input {
+  font-family: Helvetica, Arial, sans-serif;
+  overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+html, body, main, .App, #root {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+}
+
+span {
+  padding: 5px;
+}
+
+button {
+  cursor: pointer;
+}
+
+input {
+  height: auto;
+  border: 1px solid grey;
+  padding: 5px;
+  width: 100%;
+  margin: 0;
+}
+
+header {
+  padding: 10px;
+  border-bottom: darkgray solid 1px;
+}
+
+form {
+  padding-top: 15px;
+}
+
+.block {
+  display: block;
+}
+
+.button-send {
+  background: purple;
+  color: white;
+  border-radius: 5px;
+  padding: 10px;
+  height: 40px;
+  width: 90px;
+}
+
+.center-element {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content {
+  overflow: hidden;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-column-expand {
+  height: 100%;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  padding: 15px;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.input-send {
+  height: 40px;
+}
+
+.messages {
+  overflow-y: scroll;
+}
+
+.message {
+  padding: 10px;
+}
+
+.user {
+  border-radius: 5px;
+  background: purple;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bot {
+  border: 1px solid purple;
+  border-radius: 5px;
+  color: purple;
 }
