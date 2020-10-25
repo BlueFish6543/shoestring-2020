@@ -5,7 +5,14 @@
 `flask` should come with Python already by default. If not,
 use `pip3` or something to install them.
 
-JavaScript:
+We also need `TensorFlow` and `Keras`. Install them using your
+favourite package manager. For example,
+
+```shell script
+pip3 install tensorflow keras
+```
+
+For JavaScript:
 
 ```shell script
 npm install

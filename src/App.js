@@ -46,10 +46,12 @@ function App() {
 
     event.preventDefault();
     setUserMessage("");
+  };
 
+  React.useEffect(() => {
     const element = document.getElementById("messages");
     element.scrollTop = element.scrollHeight;
-  };
+  }, [messages]);
 
   return (
     <div className="App">
