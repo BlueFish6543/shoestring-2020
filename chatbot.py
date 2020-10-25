@@ -44,7 +44,7 @@ class State:
 
 state = State()
 
-with open('intents_reduced.json') as f:
+with open('intents.json') as f:
     state.intents = json.load(f)['intents']
 
 # Collate counts of which responses solved the problem
