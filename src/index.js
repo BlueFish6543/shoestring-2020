@@ -1,6 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
+import $ from "jquery";
+
+$.ajax({
+  type: "POST",
+  url: "/reset"
+});
 
 ReactDOM.render(
     <React.StrictMode>

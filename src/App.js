@@ -4,7 +4,8 @@ import $ from 'jquery';
 
 function App() {
 
-  const greeting = "Greeting";
+  const greeting = "Hello! How may I help? Please describe your problem " +
+    "and I will try to answer.";
   const [messages, setMessages] = React.useState([
     {
       text: greeting,
@@ -34,12 +35,15 @@ function App() {
       url: "/get_output",
       contentType: "application/json",
       data: JSON.stringify({
-          input_text: userMessage
+        input_text: userMessage
       })
     }).done(response => {
-      updatedMessages = updatedMessages.concat({
-        text: response,
-        sender: "bot"
+      const responses = response.split("\n");
+      responses.map(r => {
+        updatedMessages = updatedMessages.concat({
+          text: r,
+          sender: "bot"
+        });
       });
       setMessages(updatedMessages);
     });

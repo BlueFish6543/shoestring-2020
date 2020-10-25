@@ -68,36 +68,27 @@ def problem_solved():
     state.responses_count[state.intent][state.index - 1] += 1
     state.sort_responses()
     state.reset()
-    # TODO possibly
-    return "<Great!>"
+    return "Great! Glad that helped. Have a nice day!"
 
 
 def could_not_solve():
     # Could not solve problem
     state.reset()
-    # TODO possibly
-    return "<Sorry!>"
+    return "Hmm, it seems like you have a complex problem there. Please contact the supplier " \
+           "to continue troubleshooting your device. Sorry!"
 
 
-def unknown_intent():
+def unknown_intent(message=""):
     # Couldn't figure out the intent
-    # TODO possibly
-    return "<Could not figure out intent>"
-
-
-def greeting():
-    # Greeting at the start
-    # TODO possibly
-    return "<Greeting>"
+    return ("Sorry, I did not understand what you typed. Please try again. "
+            + "\n" + message).strip()
 
 
 def predict_intent(input_text):
-    # TODO: Predict scores from model, e.g.
     sequence = tokenizer.texts_to_sequences([input_text])
     data = pad_sequences(sequence, maxlen=100, padding="post")
     scores = model.predict(data)[0]
     # Discard predictions below threshold
-    print(scores)
     results = [(index, score) for index, score in enumerate(scores)
                if score > error_threshold]
 
@@ -119,6 +110,12 @@ def get_intent_response():
     # Increment the index
     state.index += 1
     return response
+
+
+@app.route('/reset', methods=['POST'])
+def reset():
+    state.reset()
+    return ""
 
 
 @app.route('/get_output', methods=['POST'])
@@ -151,7 +148,7 @@ def get_output():
             output = get_intent_response()
 
     else:
-        output = unknown_intent()
+        output = unknown_intent(state.intent_responses[state.index - 1])
 
     print(output)
     return output
