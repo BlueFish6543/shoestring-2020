@@ -113,12 +113,8 @@ def get_output():
     # This function to be called from somewhere else e.g. JavaScript?
     data = request.json
     input_text = data["input_text"]
-    startup = data["startup"]
 
-    if startup:
-        output = greeting()
-
-    elif state.intent is None:
+    if state.intent is None:
         # Figure out the intent
         intent = predict_intent(input_text, state.intent)
         # Update state intent and responses

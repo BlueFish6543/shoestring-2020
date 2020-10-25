@@ -4,8 +4,9 @@ import $ from 'jquery';
 
 function App() {
 
-  const [messages, setMessages] = React.useState([]);
-  const [userMessage, setUserMessage] = React.useState("");
+  const greeting = "Greeting";
+  const [messages, setMessages] = React.useState([greeting]);
+  const [userMessage, setUserMessage] = React.useState();
 
   const handleInputChange = event => {
     setUserMessage(event.target.value);
@@ -17,15 +18,16 @@ function App() {
       url: "/get_output",
       contentType: "application/json",
       data: JSON.stringify({
-          input_text: userMessage,
-          startup: false
+          input_text: userMessage
       })
     }).done(response => {
-      const updatedMessages = messages.concat(response);
+      let updatedMessages = messages.concat(userMessage);
+      updatedMessages = updatedMessages.concat(response);
       setMessages(updatedMessages);
     });
 
     event.preventDefault();
+    setUserMessage("");
   };
 
   return (
@@ -47,6 +49,7 @@ function App() {
             type="text"
             className="input-send"
             onChange={handleInputChange}
+            value={userMessage || ""}
           />
           <button type="submit" className="button-send">Send</button>
         </form>
